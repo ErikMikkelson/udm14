@@ -1,0 +1,29 @@
+/* Custom styles for dark mode and modal */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(39 39 42);
+    color: #efefef;
+  }
+}
+
+/* Modal styles without external dependencies */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+.modal-overlay.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .search-box {
+    margin: 0 1rem;
+  }
+}
