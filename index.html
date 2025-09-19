@@ -1,124 +1,70 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <!-- SECURE CSP IMPLEMENTATION -->
-        <meta http-equiv="Content-Security-Policy" content="
-            default-src 'self';
-            script-src 'self' 'nonce-ABC123' 'strict-dynamic';
-            style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-            font-src 'self' https://fonts.gstatic.com;
-            img-src 'self' data: https:;
-            connect-src 'self' https://www.google.com;
-            form-action 'self' https://www.google.com;
-            base-uri 'self';
-            object-src 'none';
-            frame-ancestors 'none';
-            ">
-        <!-- LOCAL STYLESHEETS -->
-        <link rel="stylesheet" href="assets/css/tailwind-min.css" />
-        <link rel="stylesheet" href="assets/css/style.css" />
-        <!-- META TAGS -->
-        <link rel="home" href="/" />
-        <title>&udm=14 | AI-Free Google Search</title>
-        <meta name="description" content="A secure, AI-free Google search interface." />
-    </head>
-    <body>
-        <div class="flex h-screen px-5 py-2 lg:p-0 dark:text-white dark:bg-zinc-800">
-            <div class="search-container m-auto">
-                <!-- SECURE FORM WITH VALIDATION -->
-                <form class="w-full" action="https://www.google.com/search" method="get" id="searchForm">
-                    <input type="hidden" name="udm" value="14">
-                    <input type="hidden" name="csrf" value="generated-csrf-token" id="csrfToken">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="size-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                        </div>
-                        <input type="search" id="searchInput" name="q"
-                            class="search-input w-full p-4 ps-10 text-sm lg:text-base rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                            placeholder="Enter your search query" required maxlength="2048" pattern="^[^<>&\"']*$"
-                            title="Search query cannot contain HTML characters" />
-                        <button type="submit" class="search-button absolute end-2.5 top-1/2 -translate-y-1/2">
-                            Search
-                        </button>
-                    </div>
-                </form>
-            </div>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'nonce-ABC123' 'strict-dynamic'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google.com; form-action 'self' https://www.google.com; base-uri 'self'; object-src 'none'; frame-ancestors 'none';">
+  <link rel="stylesheet" href="assets/css/tailwind-min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="home" href="/">
+  <title>&udm=14 | AI-Free Google Search</title>
+  <meta name="description" content="A secure, AI-free Google search interface.">
+</head>
+
+<body class="flex h-screen px-5 py-2 lg:p-0 dark:text-white dark:bg-zinc-800">
+  <div class="search-container m-auto">
+    <form id="searchForm" action="https://www.google.com/search" method="get" class="w-full">
+      <input type="hidden" name="udm" value="14">
+      <input type="hidden" id="csrfToken" name="csrf" value="">
+      <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="size-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"></path>
+          </svg>
         </div>
+        <input type="search" id="searchInput" name="q"
+          class="search-input w-full p-4 ps-10 text-sm lg:text-base rounded-full transition-colors focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Enter your search query" required maxlength="2048" pattern="^[^<>&amp;&quot;'']*$"
+          title="Search query cannot contain HTML characters">
+        <button type="submit" class="search-button absolute end-2.5 top-1/2 -translate-y-1/2">
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
 
-        <!-- SECURE JAVASCRIPT WITH NONCE -->
-        <script nonce="ABC123">
-            'use strict';
+  <script nonce="ABC123">
+    'use strict';
 
-            // Input validation and sanitization
-            function sanitizeInput(input) {
-                return input.replace(/[<>&"']/g, function(match) {
-                    return {
-                        '<': '&lt;',
-                        '>': '&gt;',
-                        '&': '&amp;',
-                        '"': '&quot;',
-                        "'": '&#x27;'
-                    }[match];
-                });
-            }
+    function sanitizeInput(input) {
+      return input.replace(/[<>&"']/g, m => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": "&#x27;" }[m]));
+    }
 
-            // Secure search function with validation
-            function performSearch(event) {
-                event.preventDefault();
+    function performSearch(e) {
+      e.preventDefault();
+      const input = document.getElementById('searchInput');
+      const term = input.value.trim();
+      if (!term) { alert('Please enter a search query'); return; }
+      if (term.length > 2048) { alert('Search query is too long'); return; }
+      const token = sanitizeInput(term);
+      window.location.href = `https://www.google.com/search?q=${encodeURIComponent(token)}&udm=14`;
+    }
 
-                const searchInput = document.getElementById('searchInput');
-                const searchTerm = searchInput.value.trim();
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('searchForm');
+      const input = document.getElementById('searchInput');
+      input.focus();
+      form.addEventListener('submit', performSearch);
+      const params = new URLSearchParams(location.search).get('q');
+      if (params && params.length <= 2048) input.value = sanitizeInput(params);
+      document.getElementById('csrfToken').value = Date.now().toString(36) + Math.random().toString(36);
+    });
+  </script>
+</body>
 
-                // Input validation
-                if (!searchTerm) {
-                    alert('Please enter a search query');
-                    return false;
-                }
-
-                if (searchTerm.length > 2048) {
-                    alert('Search query is too long');
-                    return false;
-                }
-
-                // Sanitize input
-                const sanitizedTerm = sanitizeInput(searchTerm);
-                const encodedTerm = encodeURIComponent(sanitizedTerm);
-
-                // Construct secure Google URL
-                const googleUrl = `https://www.google.com/search?q=${encodedTerm}&udm=14`;
-
-                // Navigate securely
-                window.location.href = googleUrl;
-                return false;
-            }
-
-            // Initialize form handling
-            document.addEventListener('DOMContentLoaded', function() {
-                const searchForm = document.getElementById('searchForm');
-                const searchInput = document.getElementById('searchInput');
-
-                // Focus on search input
-                searchInput.focus();
-
-                // Handle form submission
-                searchForm.addEventListener('submit', performSearch);
-
-                // Handle query parameter prefill (securely)
-                const urlParams = new URLSearchParams(window.location.search);
-                const queryParam = urlParams.get('q');
-                if (queryParam && queryParam.length <= 2048) {
-                    searchInput.value = sanitizeInput(queryParam);
-                }
-
-                // Generate CSRF token (simple implementation)
-                const csrfToken = document.getElementById('csrfToken');
-                csrfToken.value = Date.now().toString(36) + Math.random().toString(36);
-            });
-        </script>
-    </body>
 </html>
