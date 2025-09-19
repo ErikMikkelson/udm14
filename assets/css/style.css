@@ -1,29 +1,104 @@
-/* Custom styles for dark mode and modal */
+/* Reset and base styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+}
+
+body {
+    margin: 0;
+    font-family: theme("fontFamily.sans");
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+}
+
+/* Dark mode improvements */
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: rgb(39 39 42);
-    color: #efefef;
-  }
+    html {
+        color-scheme: dark;
+    }
 }
 
-/* Modal styles without external dependencies */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 40;
+/* Focus management for accessibility */
+:focus-visible {
+    outline: 2px solid theme("colors.blue.500");
+    outline-offset: 2px;
 }
 
-.modal-overlay.active {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .search-box {
-    margin: 0 1rem;
-  }
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .search-input {
+        border-width: 2px;
+    }
+
+    .search-button {
+        border: 2px solid transparent;
+    }
+}
+
+/* Print styles */
+@media print {
+    .search-container {
+        display: none;
+    }
+}
+
+/* Performance optimizations */
+.search-input {
+    will-change: border-color, box-shadow;
+}
+
+.search-button {
+    will-change: background-color;
+}
+
+/* Prevent layout shift */
+.search-container {
+    contain: layout style;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: theme("colors.gray.100");
+}
+
+::-webkit-scrollbar-thumb {
+    background: theme("colors.gray.400");
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: theme("colors.gray.500");
+}
+
+/* Dark mode scrollbar */
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-track {
+        background: theme("colors.zinc.800");
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: theme("colors.zinc.600");
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: theme("colors.zinc.500");
+    }
 }

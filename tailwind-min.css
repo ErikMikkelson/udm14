@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+@theme {
+    /* Custom theme values for your search page */
+    --color-primary: oklch(0.5 0.15 240);
+    --color-primary-hover: oklch(0.45 0.15 240);
+    --font-family-sans: system-ui, -apple-system, sans-serif;
+    --spacing-search: 1rem;
+    --radius-search: 9999px;
+}
+
+/* Define custom utilities within the utilities layer */
+@layer utilities {
+    .search-container {
+        width: 33.333333%;
+        min-width: 20rem;
+        max-width: 37.5rem;
+    }
+    .search-input {
+        @apply text-gray-900 bg-gray-50 border border-gray-300;
+        @apply dark:text-white dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-gray-400;
+    }
+    .search-button {
+        @apply bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-full;
+        @apply px-4 py-2 text-sm lg:text-base transition-colors duration-200;
+        @apply focus:ring-4 focus:ring-blue-300 focus:outline-none;
+    }
+}
+
+/* Focus variant must be applied via @variants or direct pseudo-selector */
+@layer utilities {
+    .search-input:focus {
+        @apply outline-none ring-2 ring-blue-500 border-blue-500;
+    }
+}
+
+/* Responsive adjustments */
+@layer utilities {
+    @media (max-width: 768px) {
+        .search-container {
+            width: 90%;
+            min-width: 16rem;
+        }
+        .search-button {
+            @apply relative top-auto end-auto translate-y-0 w-full mt-2;
+        }
+    }
+}
