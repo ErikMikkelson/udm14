@@ -1,0 +1,10 @@
+{
+  "name": "udm14",
+  "version": "1.0.0",
+  "author": "Erik Mikkelson",
+  "license": "MIT",
+  "devdependencies": {
+    "@tailwindcss/cli": "^4.1.13",
+    "tailwindcss": "^4.1.13"
+  }
+}
